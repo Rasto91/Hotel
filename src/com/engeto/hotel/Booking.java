@@ -1,11 +1,14 @@
 package com.engeto.hotel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Booking {
-    public enum TypeOfVacation {
+       public enum TypeOfVacation {
     RECREATIONAL, BUSINESS
     }
     private LocalDate startDate;
@@ -15,6 +18,24 @@ public class Booking {
     private Guest guest;
     private Room room;
 
+    public int getGuestCount() {
+        return guests.size();
+    }
+
+    public long getBookingLength() {
+        return ChronoUnit.DAYS.between(startDate, endDate);
+    }
+    public double getTotalPrice() {
+        return getBookingLength() * room.getPricePerNight();
+    }
+    public String getFormattedStartDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d. M. yyyy", Locale.forLanguageTag("cs-CZ"));
+        return startDate.format(formatter);
+    }
+
+    public void printGuestStatistics() {
+
+    }
 
 
     public Booking(LocalDate startDate, LocalDate endDate, TypeOfVacation type, List<Guest> guests, Room room) {
@@ -72,5 +93,7 @@ public class Booking {
     public void setRoom(Room room) {
         this.room = room;
     }
+
+
 
 }
